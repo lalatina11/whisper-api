@@ -10,12 +10,19 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.11",
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"@types/dotenv": "^8.2.3"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
+		"@clerk/express": "^1.7.63",
+		"cors": "^2.8.5",
+		"dotenv": "^17.2.3",
+		"express": "^5.2.1",
+		"mongoose": "^9.1.4",
+		"socket.io": "^4.8.3",
 		"zod": "^4.3.5"
 	}
 }
