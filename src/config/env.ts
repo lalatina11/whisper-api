@@ -6,6 +6,8 @@ const envSchema = z.object({
 		.enum(["production", "development", "stagging"])
 		.default("development"),
 	DATABASE_URL: z.string().min(1),
+	CLERK_PUBLISHABLE_KEY: z.string().min(1),
+	CLERK_SECRET_KEY: z.string().min(1),
 	PORT: z.coerce.number().min(1000),
 });
 
