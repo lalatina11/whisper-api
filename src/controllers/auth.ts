@@ -24,9 +24,8 @@ export const getCurrentUser = async (
 			.status(200)
 			.json({ error: false, message: "OK", data: user.toObject() });
 	} catch (error) {
-		console.log(error);
 		res.status(500);
-		next();
+		next(error);
 	}
 };
 
@@ -60,8 +59,7 @@ export const authCallback = async (
 		}
 		return res.status(200).json({ error: false, message: "OK", data: user });
 	} catch (error) {
-		console.log(error);
 		res.status(500);
-		next();
+		next(error);
 	}
 };
