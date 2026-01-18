@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { authCallback, getCurrentUser } from "../controllers/auth";
+import { protectedRoute } from "../middlewares/auth-middleware";
 
 const authRouter = Router();
 
-authRouter.get("/me", (_req, res) => {
-	res.status(200).json({ error: false, message: "OK", data: {} });
-});
+authRouter.get("/me", protectedRoute, getCurrentUser);
+authRouter.post("/callback", protectedRoute, authCallback);
 
 export default authRouter;
