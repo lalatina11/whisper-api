@@ -48,6 +48,13 @@ export const getOrCreateChat = async (
 			return res.status(401).json({ error: true, message: "Not Authorized" });
 		}
 		const { participantId } = req.params;
+
+		if (!participantId) {
+			return res
+				.status(400)
+				.json({ error: true, message: "Missing Participant ID" });
+		}
+
 		let chat = await ChatModel.findOne({
 			participants: { $all: [userId, participantId] },
 		})
