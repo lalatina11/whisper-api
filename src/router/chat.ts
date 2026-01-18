@@ -1,9 +1,12 @@
 import { Router } from "express";
+import { getChats, getOrCreateChat } from "../controllers/chat";
+import { protectedRoute } from "../middlewares/auth-middleware";
 
 const chatRouter = Router();
 
-chatRouter.get("/me", (_req, res) => {
-	res.status(200).json({ error: false, message: "OK", data: {} });
-});
+chatRouter.use(protectedRoute);
+
+chatRouter.get("/", getChats);
+chatRouter.get("/with/:participantId", getOrCreateChat);
 
 export default chatRouter;
