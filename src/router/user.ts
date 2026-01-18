@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { getUsers } from "../controllers/user";
+import { protectedRoute } from "../middlewares/auth-middleware";
 
 const userRouter = Router();
 
-userRouter.get("/me", (_req, res) => {
-	res.status(200).json({ error: false, message: "OK", data: {} });
-});
+userRouter.get("/me", protectedRoute, getUsers);
 
 export default userRouter;
