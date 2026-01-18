@@ -1,4 +1,5 @@
 import type { NextFunction, Response } from "express";
+import { Types } from "mongoose";
 import ChatModel from "../models/chat";
 import type { AuthRequest } from "../types";
 
@@ -53,6 +54,11 @@ export const getOrCreateChat = async (
 			return res
 				.status(400)
 				.json({ error: true, message: "Missing Participant ID" });
+		}
+		if (!Types.ObjectId.isValid(participantId.toString())) {
+			return res
+				.status(400)
+				.json({ error: true, message: "Invalid Participant ID" });
 		}
 
 		let chat = await ChatModel.findOne({
