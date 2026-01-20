@@ -9,6 +9,7 @@ const envSchema = z.object({
 	CLERK_PUBLISHABLE_KEY: z.string().min(1),
 	CLERK_SECRET_KEY: z.string().min(1),
 	PORT: z.coerce.number().min(1000),
+	CLIENT_URL: z.string().min(1),
 });
 
 const getEnv = () => {
