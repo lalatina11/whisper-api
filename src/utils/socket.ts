@@ -6,7 +6,7 @@ import ENV from "../config/env";
 import ChatModel from "../models/chat";
 import MessageModel from "../models/message";
 import UserModel from "../models/user";
-import type { MessageDataForSocket, SocketWithUserId } from "../types";
+import type { MessageDataForSocket } from "../types";
 
 // store online users in memory: userId => socketId
 export const onlineUsers = new Map<string, string>();
@@ -17,7 +17,7 @@ export const initializeSocket = async (httpServer: HttpServer) => {
 		cors: { origin: [ENV.CLIENT_URL] },
 	});
 
-	io.use(async (socket: SocketWithUserId, next) => {
+	io.use(async (socket, next) => {
 		const token = socket.handshake.auth.token; //token from client
 		if (!token) return next(new Error("Missing Socket IO Token"));
 		try {
@@ -32,7 +32,7 @@ export const initializeSocket = async (httpServer: HttpServer) => {
 			if (!user) {
 				return next(new Error("Invalid User!"));
 			}
-			socket.userId = user._id.toString();
+			socket.data.userId = user._id.toString();
 			next();
 		} catch (error) {
 			const errMessage =
@@ -46,8 +46,10 @@ export const initializeSocket = async (httpServer: HttpServer) => {
 
 	// this "connection" event name is special and should be written like this
 	// it's the event that is triggered when a new client connects to the server
-	io.on("connection", (socket: SocketWithUserId) => {
-		const { userId } = socket;
+	io.on("connection", (socket) => {
+		const {
+			data: { userId },
+		} = socket;
 		if (!userId) throw new Error("User is not connected");
 
 		// send list of currently online users to the newly connected client
